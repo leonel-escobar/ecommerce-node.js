@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../js/ejs.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -16,7 +17,16 @@
     <h1>E-commerce backend</h1>
     <div class="form-container"></div>
     <div class="cards-container"></div>
-    
+    <div class="chat-container">
+        <h2>Centro de mensajes</h2>
+        <input type="email" id="user-email" name="email" placeholder="Ingresa tu e-mail" required>
+        <div id="chat-messages"></div>
+        <form id="form-message">
+            <input type="text" id="new-message" name="messages" placeholder="Ingrese un mensaje" title="El mensaje no debe exceder los 160 caracteres" pattern="^.{1,160}$" required>
+            <button class="button button--primary" type="submit">Enviar</button>
+        </form>
+    </div>
+
     <a href="/html/cart.html">Ir al carrito</a>
     <script src="../js/main.js"></script>
 </body>

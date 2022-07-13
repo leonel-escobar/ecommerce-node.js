@@ -48,7 +48,6 @@ class MongodbContainer {
             console.log(err);
         }
     }
-
 }
 
 module.exports = MongodbContainer;

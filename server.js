@@ -7,9 +7,13 @@ const passport = require("passport");
 const numCPUs = require("os").cpus().length;
 const cluster = require("cluster");
 const logger = require("./src/utils/winston");
+const {Server: HttpServer} = require("http");
+const {Server: IOServer} = require("socket.io");
 
-// initializations
+// Initializations
 const app = express();
+const httpServer = new HttpServer(app)
+const io = new IOServer(httpServer)
 require("./src/passport/auth")
 
 // Settings
@@ -31,6 +35,21 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session())
+
+// Websockets
+const { messages } = require("./src/containers/index")
+
+io.on("connection", async (socket) => {
+    console.log("Nuevo cliente conectado");
+    // Mensajes del chat
+    socket.emit("messages", await messages.getAll());
+
+    socket.on("newMessage", async newMessage => {
+        newMessage.date = new Date().toLocaleString();
+        await messages.save(newMessage);
+        io.sockets.emit("messages", await messages.getAll());
+    });
+});
 
 // Routes
 const productsRouter = require("./src/routes/productRoutes");
@@ -78,7 +97,7 @@ if (process.argv[2] === "cluster" && cluster.isMaster) {
 
 } else {
 
-    const server = app.listen(PORT, () => {
+    const server = httpServer.listen(PORT, () => {
         logger.info(`Server listen port ${PORT}`);
     })
     server.on("Error", error => logger.error(`Error: ${error}`));

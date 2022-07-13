@@ -157,3 +157,28 @@ document.addEventListener("click", async (e) => {
         }  
     }
 })
+
+// Websockets
+const socket = io.connect();
+const author = document.getElementById("user-email");
+const text = document.getElementById("new-message");
+const chatMessages = document.getElementById("chat-messages");
+const formChat = document.getElementById("form-message");
+
+formChat.addEventListener("submit", e => {
+    e.preventDefault();
+    const newMessage = {author: author.value, text: text.value}
+    socket.emit("newMessage", newMessage);
+})    
+
+// Recibe e imprime todos los mensajes actualizados
+socket.on("messages", messages => {
+    chatMessages.innerHTML = "";
+    for (let el of messages) {
+        chatMessages.innerHTML += `<p>
+            <span class="post-author">${el.author}</span> 
+            <span class="post-date">[${el.date}]:</span>  
+            <span class="post-text">${el.text}</span>
+        </p>`;
+    }
+})

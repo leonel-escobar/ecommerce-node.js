@@ -109,3 +109,42 @@ input {
 .table-container img {
     width: 80px;
 }
+
+/* ---------- Chat ---------- */
+
+.chat-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    max-width: 650px;
+    padding: 30px 0;
+    border-top: var(--black-color) solid 1px;
+}
+
+.chat-container form > input {
+    width: 250px;
+}
+
+#chat-messages {
+    height: 200px;
+    border-radius: 3px;
+    background: #edecec;
+    opacity: 1;
+    overflow-y: scroll;
+    margin: 30px 0;
+    padding: 15px 30px;
+}
+
+.post-author {
+    font-weight: 700;
+    color: var(--blue-color);
+}
+
+.post-date {
+    color: var(--brown-color);
+}
+
+.post-text {
+    font-style: italic;
+    color: var(--green-color);
+}
