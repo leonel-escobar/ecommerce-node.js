@@ -5,7 +5,7 @@ const cartController = require("../controllers/cartController")
 // Crea un carrito y devuelve su id
 router.post("/", cartController.createCart)
 
-// Vacía un carrito y lo elimina
+// Vacía un carrito
 router.delete("/:id", cartController.removeCartById)
 
 // Muestra los productos de un carrito por id

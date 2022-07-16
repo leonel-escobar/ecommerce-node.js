@@ -1,6 +1,8 @@
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
+const JWTStrategy = require('passport-jwt').Strategy
+const ExtractJWT = require('passport-jwt').ExtractJwt
 const usersDaoMongoDB = require("../daos/users/usersDaoMongoDB");
 const usersDB = new usersDaoMongoDB();
 const sendEmail = require("../nodemailer/email");
@@ -62,6 +64,18 @@ passport.use("signin", new LocalStrategy({
         return done(null, user)
     }
 }))
+
+passport.use(new JWTStrategy({
+    secretOrKey: "top_secret",
+    jwtFromRequest: ExtractJWT.fromUrlQueryParameter("secret_token")
+}, async (token, done) => {
+        try {
+            done(null, token.user)
+        } catch (error) {
+            done(error)
+        }
+    }
+))
 
 // bcrypt
 const encryptPassword = (password) => {

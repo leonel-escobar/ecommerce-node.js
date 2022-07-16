@@ -7,7 +7,8 @@ router.get("/userdata", (req, res) => {
         email: req.user.email,
         address: req.user.address,
         tel: req.user.tel,
-        cartId: req.user.cartId
+        cartId: req.user.cartId,
+        token: req.cookies.jwt
     }
     res.send(user)
 })

@@ -30,7 +30,9 @@ const getAdminContent = async () => {
 // Obtiene los productos e imprime las cards
 const getProducts = async () => {
     try {
-        let res = await fetch("/api/productos")
+        const user = await getUserData();
+        const token = user.token
+        let res = await fetch(`/api/productos?secret_token=${token}`)
         let json = await res.json()
     
         let data = await getTemplate("../templates/products.ejs")
@@ -62,10 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
     en caso contrario actualiza el producto con ese id */
 formContainer.addEventListener("submit", async (e) => {
     e.preventDefault()
-    
+    const user = await getUserData();
+    const token = user.token
     if (!e.target.id.value) {
         try {
-            await fetch("/api/productos", {
+            await fetch(`/api/productos?secret_token=${token}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=utf-8"
@@ -85,7 +88,7 @@ formContainer.addEventListener("submit", async (e) => {
         }
     } else {
         try {
-            await fetch(`/api/productos/${e.target.id.value}`, {
+            await fetch(`/api/productos/${e.target.id.value}?secret_token=${token}`, {
                 method: "PUT",
                 headers: {
                     "Content-type": "application/json; charset=utf-8"
@@ -123,10 +126,11 @@ document.addEventListener("click", async e => {
 
     if (e.target.matches(".delete")) {
         let isDelete = confirm(`¿Está seguro de eliminar el producto ${e.target.dataset.id}?`)
-
+        const user = await getUserData();
+        const token = user.token
         if (isDelete) {
             try {
-                await fetch(`/api/productos/${e.target.dataset.id}`, {
+                await fetch(`/api/productos/${e.target.dataset.id}?secret_token=${token}`, {
                     method: "DELETE",
                     headers: {
                         "Content-type": "application/json; charset=utf-8"
@@ -142,10 +146,11 @@ document.addEventListener("click", async e => {
 
 document.addEventListener("click", async (e) => {
     if (e.target.matches(".add-product")) {
+        const user = await getUserData();
+        const token = user.token
+        const cartId = await user.cartId
         try {
-            let userData = await getUserData()
-            let cartId = await userData.cartId
-            await fetch(`/api/carrito/${cartId}/productos`, {
+            await fetch(`/api/carrito/${cartId}/productos?secret_token=${token}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=utf-8"

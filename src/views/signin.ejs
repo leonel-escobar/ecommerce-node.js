@@ -5,20 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Document</title>
+    <title>Inicio de sesión</title>
 </head>
 <body>
     <h1>Iniciar sesión</h1>
     <div>
-        <form action="/signin" method="post">
+        <form class="signin-form">
             <input type="text" name="email" placeholder="Ingrese su email">
             <input type="password" name="password" placeholder="Ingrese su contraseña">
             <button class="button button--primary" type="submit">Iniciar sesión</button>
         </form>
     </div>
-    
+    <br>
     <a href="/signup">
         <button class="button button--primary">Registrarse</button>
     </a>
+    <script src="/js/signin.js"></script>
 </body>
 </html>

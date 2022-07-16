@@ -58,11 +58,11 @@ const loginRouter = require("./src/routes/loginRoutes")
 const userRouter = require("./src/routes/userRoutes")
 const orderRoutes = require("./src/routes/orderRoutes")
 
-app.use("/api/productos", productsRouter);
-app.use("/api/carrito", cartRouter);
+app.use("/api/productos", passport.authenticate('jwt', { session: false }), productsRouter);
+app.use("/api/carrito", passport.authenticate('jwt', { session: false }), cartRouter);
+app.use("/", orderRoutes);
 app.use("/", loginRouter);
 app.use("/", userRouter);
-app.use("/", orderRoutes);
 
 function isAuth(req,res,next) {
     if (req.isAuthenticated()) {

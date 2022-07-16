@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const loginUser = require("../controllers/loginController")
 
 router.get("/signup", (req, res) => {
     res.render("signup")
@@ -17,10 +18,9 @@ router.get("/signin", (req, res) => {
 });
 
 router.post("/signin", passport.authenticate("signin", {
-    successRedirect: "/",
     failureRedirect: "/signin-error",
     passReqToCallback: true
-}));
+}), loginUser);
 
 router.get("/signin-error", (req, res) => {
     res.render("signin-error")

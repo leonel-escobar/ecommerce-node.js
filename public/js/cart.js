@@ -10,7 +10,10 @@ const getUserData = async () => {
 
 // Obtiene los productos e imprime el carrito
 const getProducts = async () => {
-    let res = await fetch(`/api/carrito/${cart._id || cart.id}/productos`)
+    const user = await getUserData()
+    const cartId = await user.cartId
+    const token = user.token
+    let res = await fetch(`/api/carrito/${cartId}/productos?secret_token=${token}`)
     let json = await res.json()
     return json
 }
@@ -43,9 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 document.addEventListener("click", async (e) => {
+    const user = await getUserData()
+    const token = user.token
+    const cartId = await user.cartId
     if (e.target.matches(".remove")) {
         try {
-            await fetch(`/api/carrito/${cart._id || cart.id}/productos/${e.target.dataset.id}`, {
+            await fetch(`/api/carrito/${cartId}/productos/${e.target.dataset.id}?secret_token=${token}`, {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json; charset=utf-8"
@@ -59,7 +65,7 @@ document.addEventListener("click", async (e) => {
 
     if (e.target.matches(".remove-cart")) {
         try {
-            await fetch(`/api/carrito/${cart._id || cart.id}`, {
+            await fetch(`/api/carrito/${cartId}?secret_token=${token}`, {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json; charset=utf-8"
@@ -75,8 +81,10 @@ document.addEventListener("click", async (e) => {
     if (e.target.matches(".purchase")) {
         const userData = await getUserData()
         const userProducts = await getProducts()
+        const token = userData.token
+        const cartId = userData.cartId
         try {
-            await fetch("/send-order", {
+            await fetch(`/send-order?secret_token=${token}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=utf-8"
@@ -89,14 +97,7 @@ document.addEventListener("click", async (e) => {
                     products: userProducts,
                 })
             })
-            await fetch(`/api/carrito/${cart._id || cart.id}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-type": "application/json; charset=utf-8"
-                },
-            })
-            
-            sessionStorage.clear()
+
             document.querySelector(".table-container").innerHTML = `<h3>Orden de compra enviada</h3>`
             setTimeout(() => {
                 document.querySelector(".table-container").innerHTML = ""
