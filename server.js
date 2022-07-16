@@ -60,7 +60,7 @@ const orderRoutes = require("./src/routes/orderRoutes")
 
 app.use("/api/productos", passport.authenticate('jwt', { session: false }), productsRouter);
 app.use("/api/carrito", passport.authenticate('jwt', { session: false }), cartRouter);
-app.use("/", orderRoutes);
+app.use("/api/orden", passport.authenticate('jwt', { session: false }), orderRoutes);
 app.use("/", loginRouter);
 app.use("/", userRouter);
 

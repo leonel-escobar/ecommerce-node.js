@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const config = require("../utils/config")
 
-const url = config.mongodb.url;
+const url = config;
 mongoose.connect(url);
 
 class MongodbContainer {

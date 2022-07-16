@@ -82,9 +82,9 @@ document.addEventListener("click", async (e) => {
         const userData = await getUserData()
         const userProducts = await getProducts()
         const token = userData.token
-        const cartId = userData.cartId
+        
         try {
-            await fetch(`/send-order?secret_token=${token}`, {
+            await fetch(`/api/orden/enviar?secret_token=${token}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=utf-8"

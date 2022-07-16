@@ -5,7 +5,7 @@ const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').ExtractJwt
 const usersDaoMongoDB = require("../daos/users/usersDaoMongoDB");
 const usersDB = new usersDaoMongoDB();
-const sendEmail = require("../nodemailer/email");
+const sendEmail = require("../utils/email");
 const { carts } = require("../containers/index");
 
 require("dotenv").config();
