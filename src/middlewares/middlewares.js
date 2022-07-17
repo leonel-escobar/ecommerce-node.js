@@ -1,3 +1,5 @@
+const UsersDaoMongoDB = require("../daos/users/usersDaoMongoDB")
+const users = new UsersDaoMongoDB()
 
 function isAuth(req,res,next) {
     if (req.isAuthenticated()) {
@@ -7,8 +9,10 @@ function isAuth(req,res,next) {
     }
 }
 
-function isAdmin(req,res,next) {
-    const admin = req.user.isAdmin
+async function isAdmin(req,res,next) {
+    const userId = await req.user._id
+    const user = await users.getById(userId)
+    const admin = await user.isAdmin
     if (admin === true) {
         next()
     } else {

@@ -6,13 +6,14 @@
             <p><%= el.description %></p>
             <span>Precio: $<%= el.price %> </span>
             <div class="card__info">
+                <span>Categoría: <%= el.category %></span>
                 <span>Stock: <%= el.stock %></span>
                 <span>ID: <%= el._id || el.id %></span>
             </div>
             <% if (admin) { %> 
                 <div class="card__buttons">
                     <button class="edit button button--primary" data-id=<%= el._id || el.id %> data-title=<%= el.title %> 
-                        data-description=<%= el.description %> data-code=<%= el.code %> data-image=<%= el.image %>
+                        data-description=<%= el.description %> data-category=<%= el.category %> data-code=<%= el.code %> data-image=<%= el.image %>
                         data-price=<%= el.price %> data-stock=<%= el.stock %> >Actualizar</button>
                     <button class="delete button button--primary" data-id=<%= el._id || el.id %> >Eliminar</button>
                 </div>

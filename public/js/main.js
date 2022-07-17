@@ -18,7 +18,7 @@ const printUserData = async () => {
 
 // Si tiene permisos de administrador se muestra el formulario en pantalla
 const getAdminContent = async () => {
-    const userData = getUserData()
+    const userData = await getUserData()
     const admin = userData.isAdmin
     if (admin) {
         let data = await getTemplate("../templates/form.ejs")
@@ -78,6 +78,7 @@ formContainer.addEventListener("submit", async (e) => {
                 body: JSON.stringify({
                     title: e.target.title.value,
                     description: e.target.description.value,
+                    category: e.target.category.value,
                     image: e.target.image.value,
                     code: e.target.code.value,
                     price: e.target.price.value,
@@ -98,6 +99,7 @@ formContainer.addEventListener("submit", async (e) => {
                 body: JSON.stringify({
                     title: e.target.title.value,
                     description: e.target.description.value,
+                    category: e.target.category.value,
                     image: e.target.image.value,
                     code: e.target.code.value,
                     price: e.target.price.value,
@@ -120,6 +122,7 @@ document.addEventListener("click", async e => {
         form.id.value = e.target.dataset.id
         form.title.value = e.target.dataset.title
         form.description.value = e.target.dataset.description
+        form.category.value = e.target.dataset.category
         form.code.value = e.target.dataset.code
         form.image.value = e.target.dataset.image
         form.price.value = e.target.dataset.price
