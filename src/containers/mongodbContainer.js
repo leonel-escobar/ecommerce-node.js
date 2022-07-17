@@ -1,12 +1,11 @@
-const mongoose = require("mongoose")
-const config = require("../utils/config")
-
-const url = config;
-mongoose.connect(url);
+const mongoose = require("mongoose");
+const MongoDBClient = require("../utils/db");
+const mongoDB = new MongoDBClient()
 
 class MongodbContainer {
     constructor (collectionName, schema) {
         this.collection = mongoose.model(collectionName, schema)
+        mongoDB.connect()
     }
 
     async save(obj) {

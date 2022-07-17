@@ -39,7 +39,6 @@ passport.use("signup", new LocalStrategy({
             tel: req.body.tel,
             address: req.body.address,
             age: req.body.age,
-            avatar: req.body.avatar,
             cartId: cartId
         }
         await usersDB.save(newUser)
