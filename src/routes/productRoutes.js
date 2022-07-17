@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const productsController = require("../controllers/productsController")
+const { isAdmin } = require("../middlewares/middlewares")
 
 // Devuelve todos los productos
 router.get("/", productsController.getProducts)
@@ -9,12 +10,12 @@ router.get("/", productsController.getProducts)
 router.get("/:id", productsController.getProductById)
 
 // Recibe y guarda un nuevo producto
-router.post("/", productsController.saveProduct)
+router.post("/", isAdmin, productsController.saveProduct)
 
 // Actualiza un producto por su id
-router.put("/:id", productsController.updateProduct)
+router.put("/:id", isAdmin, productsController.updateProduct)
 
 // Elimina un producto por su id
-router.delete("/:id", productsController.deleteProduct)
+router.delete("/:id", isAdmin, productsController.deleteProduct)
 
 module.exports = router;

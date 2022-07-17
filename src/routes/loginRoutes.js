@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const loginUser = require("../controllers/loginController")
+const validationSignup = require("../middlewares/validations")
 
 router.get("/signup", (req, res) => {
     res.render("signup")
 });
 
-router.post("/signup", passport.authenticate("signup", {
+router.post("/signup", validationSignup, passport.authenticate("signup", {
     successRedirect: "/signin",
     failureRedirect: "/signin-error",
     passReqToCallback: true

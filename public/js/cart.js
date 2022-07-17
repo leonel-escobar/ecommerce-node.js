@@ -63,21 +63,6 @@ document.addEventListener("click", async (e) => {
         }
     }
 
-    if (e.target.matches(".remove-cart")) {
-        try {
-            await fetch(`/api/carrito/${cartId}?secret_token=${token}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-type": "application/json; charset=utf-8"
-                },
-            })
-            sessionStorage.clear()
-            location.reload()
-        } catch (err) {
-            console.log("Error al eliminar el carrito", err);
-        }
-    }
-
     if (e.target.matches(".purchase")) {
         const userData = await getUserData()
         const userProducts = await getProducts()

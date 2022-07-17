@@ -1,4 +1,3 @@
-let admin = true;
 const formContainer = document.querySelector(".form-container");
 
 // Obtiene los datos del usuario logueado
@@ -19,6 +18,8 @@ const printUserData = async () => {
 
 // Si tiene permisos de administrador se muestra el formulario en pantalla
 const getAdminContent = async () => {
+    const userData = getUserData()
+    const admin = userData.isAdmin
     if (admin) {
         let data = await getTemplate("../templates/form.ejs")
         let template = ejs.compile(data)
@@ -31,6 +32,7 @@ const getAdminContent = async () => {
 const getProducts = async () => {
     try {
         const user = await getUserData();
+        const admin = user.isAdmin;
         const token = user.token
         let res = await fetch(`/api/productos?secret_token=${token}`)
         let json = await res.json()

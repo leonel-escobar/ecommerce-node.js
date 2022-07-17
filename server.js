@@ -9,6 +9,7 @@ const cluster = require("cluster");
 const logger = require("./src/utils/winston");
 const {Server: HttpServer} = require("http");
 const {Server: IOServer} = require("socket.io");
+const { isAuth } = require("./src/middlewares/middlewares")
 
 // Initializations
 const app = express();
@@ -37,19 +38,11 @@ app.use(passport.initialize());
 app.use(passport.session())
 
 // Websockets
-const { messages } = require("./src/containers/index")
-
-io.on("connection", async (socket) => {
-    console.log("Nuevo cliente conectado");
-    // Mensajes del chat
-    socket.emit("messages", await messages.getAll());
-
-    socket.on("newMessage", async newMessage => {
-        newMessage.date = new Date().toLocaleString();
-        await messages.save(newMessage);
-        io.sockets.emit("messages", await messages.getAll());
-    });
-});
+const chatController = require("./src/controllers/chatController")
+const messagesSocket = (socket) => {
+    chatController(io, socket)
+}
+io.on("connection", messagesSocket);
 
 // Routes
 const productsRouter = require("./src/routes/productRoutes");
@@ -63,14 +56,6 @@ app.use("/api/carrito", passport.authenticate('jwt', { session: false }), cartRo
 app.use("/api/orden", passport.authenticate('jwt', { session: false }), orderRoutes);
 app.use("/", loginRouter);
 app.use("/", userRouter);
-
-function isAuth(req,res,next) {
-    if (req.isAuthenticated()) {
-        next()
-    } else {
-        res.redirect("/signin")
-    }
-}
 
 app.get('/', isAuth,(req, res) => {
     res.sendFile(path.join(__dirname, "./public", "/html/index.html"))
