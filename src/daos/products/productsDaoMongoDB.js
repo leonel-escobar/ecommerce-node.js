@@ -15,6 +15,15 @@ class ProductsDaoMongoDB extends MongodbContainer {
             console.log(err);
         }
     }
+
+    async getByCategory(category) {
+        try {
+            const products = await this.collection.find({"category": {$eq: category}});
+            return products;
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 module.exports = ProductsDaoMongoDB;

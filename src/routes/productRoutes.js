@@ -9,6 +9,9 @@ router.get("/", productsController.getProducts)
 // Devuelve un producto por su id
 router.get("/:id", productsController.getProductById)
 
+// Devuelve productos por
+router.get("/categoria/:category", productsController.getByCategory);
+
 // Recibe y guarda un nuevo producto
 router.post("/", isAdmin, productsController.saveProduct)
 

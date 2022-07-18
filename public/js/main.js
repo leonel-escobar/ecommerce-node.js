@@ -170,14 +170,15 @@ document.addEventListener("click", async (e) => {
 
 // Websockets
 const socket = io.connect();
-const author = document.getElementById("user-email");
 const text = document.getElementById("new-message");
 const chatMessages = document.getElementById("chat-messages");
 const formChat = document.getElementById("form-message");
 
-formChat.addEventListener("submit", e => {
+formChat.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const newMessage = {author: author.value, text: text.value}
+    const userData = await getUserData();
+    const email = await userData.email;
+    const newMessage = {author: email, text: text.value}
     socket.emit("newMessage", newMessage);
 })    
 

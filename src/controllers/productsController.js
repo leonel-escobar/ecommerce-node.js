@@ -12,6 +12,12 @@ const productsController = {
         res.send(data)
     },
 
+    getByCategory: async (req, res) => {
+        const category = req.params.category;
+        const data = await products.getByCategory(category)
+        res.send(data)
+    },
+
     saveProduct: async (req, res) => {
         let product = req.body
         const newProduct = await products.save(product)
