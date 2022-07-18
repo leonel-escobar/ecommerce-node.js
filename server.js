@@ -10,6 +10,7 @@ const logger = require("./src/utils/winston");
 const {Server: HttpServer} = require("http");
 const {Server: IOServer} = require("socket.io");
 const { isAuth } = require("./src/middlewares/middlewares")
+const { port } = require("./src/utils/config")
 
 // Initializations
 const app = express();
@@ -66,7 +67,7 @@ app.all('*', (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 8080;
+const PORT = port;
 
 if (process.argv[2] === "cluster" && cluster.isMaster) {
 

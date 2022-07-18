@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const logger = require("./winston")
-const url = require("./config")
+const { mongoUrl } = require("./config")
 
 class MongoDBClient {
     constructor() {
@@ -9,7 +9,7 @@ class MongoDBClient {
 
     async connect() {
         try {
-            await this.client.connect(url)
+            await this.client.connect(mongoUrl)
         } catch (err) {
             logger.warn("Error al conectar con la base de datos");
         }
