@@ -67,7 +67,7 @@ app.all('*', (req, res) => {
 });
 
 // Start server
-const PORT = port;
+const PORT = process.env.PORT || port;
 
 if (process.argv[2] === "cluster" && cluster.isMaster) {
 
