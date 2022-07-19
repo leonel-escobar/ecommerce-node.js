@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /*  Agrega productos si el input id no contiene valor, 
     en caso contrario actualiza el producto con ese id */
-formContainer.addEventListener("submit", async (e) => {
+formContainer.addEventListener("submit", async e => {
     e.preventDefault()
     const user = await getUserData();
     const token = user.token

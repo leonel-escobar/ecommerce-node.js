@@ -12,8 +12,8 @@
             </div>
             <% if (admin) { %> 
                 <div class="card__buttons">
-                    <button class="edit button button--primary" data-id=<%= el._id || el.id %> data-title=<%= el.title %> 
-                        data-description=<%= el.description %> data-category=<%= el.category %> data-code=<%= el.code %> data-image=<%= el.image %>
+                    <button class="edit button button--primary" data-id=<%= el._id || el.id %> data-title="<%= el.title %>" 
+                        data-description="<%= el.description %>" data-category="<%= el.category %>" data-code=<%= el.code %> data-image="<%= el.image %>"
                         data-price=<%= el.price %> data-stock=<%= el.stock %> >Actualizar</button>
                     <button class="delete button button--primary" data-id=<%= el._id || el.id %> >Eliminar</button>
                 </div>
